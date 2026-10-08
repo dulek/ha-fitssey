@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from typing import Any
-from uuid import UUID
 from zoneinfo import ZoneInfo
 
 import voluptuous as vol
@@ -18,12 +17,18 @@ from homeassistant.helpers.selector import (
 )
 from homeassistant.util import dt as dt_util
 
-from .api import FitsseyApi, FitsseyApiError, FitsseyAuthError, FitsseyStudioError
-from .const import CONF_API_KEY, CONF_STUDIO_UUID, DOMAIN
+from .api import (
+    FitsseyApi,
+    FitsseyApiError,
+    FitsseyAuthError,
+    FitsseyStudioError,
+    validate_studio_identifier,
+)
+from .const import CONF_API_KEY, CONF_STUDIO_ID, DOMAIN
 
 STUDIO_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_STUDIO_UUID): TextSelector(),
+        vol.Required(CONF_STUDIO_ID): TextSelector(),
         vol.Required(CONF_API_KEY): TextSelector(
             TextSelectorConfig(type=TextSelectorType.PASSWORD)
         ),
@@ -44,12 +49,12 @@ class FitsseyConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     async def _validate(
-        self, studio_uuid: str, api_key: str
+        self, studio_id: str, api_key: str
     ) -> dict[str, str]:
         """Check both endpoints needed by this integration."""
         api = FitsseyApi(
             async_get_clientsession(self.hass),
-            studio_uuid,
+            studio_id,
             api_key,
             ZoneInfo(self.hass.config.time_zone),
         )
@@ -73,17 +78,17 @@ class FitsseyConfigFlow(ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
         if user_input is not None:
             try:
-                studio_uuid = str(UUID(user_input[CONF_STUDIO_UUID].strip()))
-            except (ValueError, AttributeError):
-                errors[CONF_STUDIO_UUID] = "invalid_uuid"
+                studio_id = validate_studio_identifier(user_input[CONF_STUDIO_ID])
+            except ValueError:
+                errors[CONF_STUDIO_ID] = "invalid_identifier"
             else:
-                await self.async_set_unique_id(studio_uuid)
+                await self.async_set_unique_id(studio_id.casefold())
                 self._abort_if_unique_id_configured()
-                if not (errors := await self._validate(studio_uuid, user_input[CONF_API_KEY])):
+                if not (errors := await self._validate(studio_id, user_input[CONF_API_KEY])):
                     return self.async_create_entry(
-                        title=f"Fitssey {studio_uuid}",
+                        title=f"Fitssey {studio_id}",
                         data={
-                            CONF_STUDIO_UUID: studio_uuid,
+                            CONF_STUDIO_ID: studio_id,
                             CONF_API_KEY: user_input[CONF_API_KEY],
                         },
                     )
@@ -105,7 +110,8 @@ class FitsseyConfigFlow(ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
         if user_input is not None:
             errors = await self._validate(
-                entry.data[CONF_STUDIO_UUID], user_input[CONF_API_KEY]
+                entry.data[CONF_STUDIO_ID],
+                user_input[CONF_API_KEY],
             )
             if not errors:
                 await self.async_set_unique_id(entry.unique_id)
@@ -125,7 +131,8 @@ class FitsseyConfigFlow(ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
         if user_input is not None:
             errors = await self._validate(
-                entry.data[CONF_STUDIO_UUID], user_input[CONF_API_KEY]
+                entry.data[CONF_STUDIO_ID],
+                user_input[CONF_API_KEY],
             )
             if not errors:
                 await self.async_set_unique_id(entry.unique_id)

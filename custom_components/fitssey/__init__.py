@@ -11,7 +11,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import FitsseyApi
-from .const import CONF_API_KEY, CONF_STUDIO_UUID
+from .const import CONF_API_KEY, CONF_STUDIO_ID
 from .coordinator import FitsseyCoordinator
 
 PLATFORMS = [Platform.CALENDAR]
@@ -32,7 +32,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: FitsseyConfigEntry) -> b
     """Set up a Fitssey studio."""
     api = FitsseyApi(
         async_get_clientsession(hass),
-        entry.data[CONF_STUDIO_UUID],
+        entry.data[CONF_STUDIO_ID],
         entry.data[CONF_API_KEY],
         ZoneInfo(hass.config.time_zone),
     )

@@ -3,7 +3,7 @@
 from datetime import timedelta
 
 DOMAIN = "fitssey"
-CONF_STUDIO_UUID = "studio_uuid"
+CONF_STUDIO_ID = "studio_id"
 CONF_API_KEY = "api_key"
 
 POLL_INTERVAL = timedelta(minutes=5)

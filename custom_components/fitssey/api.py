@@ -6,6 +6,7 @@ import asyncio
 from datetime import date
 import json
 from typing import Any
+from urllib.parse import quote
 from zoneinfo import ZoneInfo
 
 from aiohttp import ClientError, ClientSession, ClientTimeout
@@ -23,7 +24,22 @@ class FitsseyAuthError(FitsseyApiError):
 
 
 class FitsseyStudioError(FitsseyApiError):
-    """The studio UUID was not found."""
+    """The studio identifier was not found."""
+
+
+def validate_studio_identifier(value: str) -> str:
+    """Accept any non-empty studio identifier without imposing a UUID format."""
+    if not isinstance(value, str):
+        raise ValueError("Invalid studio identifier")
+    identifier = value.strip()
+    if (
+        not identifier
+        or len(identifier) > 255
+        or identifier in {".", ".."}
+        or any(ord(char) < 32 or ord(char) == 127 for char in identifier)
+    ):
+        raise ValueError("Invalid studio identifier")
+    return identifier
 
 
 class FitsseyApi:
@@ -32,12 +48,15 @@ class FitsseyApi:
     def __init__(
         self,
         session: ClientSession,
-        studio_uuid: str,
+        studio_id: str,
         api_key: str,
         local_timezone: ZoneInfo,
     ) -> None:
         self._session = session
-        self._base_url = f"https://app.fitssey.com/{studio_uuid}/api/v4/public"
+        studio_id = validate_studio_identifier(studio_id)
+        self._base_url = (
+            f"https://app.fitssey.com/{quote(studio_id, safe='')}/api/v4/public"
+        )
         self._api_key = api_key
         self._timezone = local_timezone
         self._lock = asyncio.Lock()

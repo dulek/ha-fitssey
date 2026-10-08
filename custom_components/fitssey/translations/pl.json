@@ -5,12 +5,12 @@
       "user": {
         "title": "Połącz studio Fitssey",
         "data": {
-          "studio_uuid": "UUID studia",
-          "api_key": "Klucz API"
+          "api_key": "Klucz API",
+          "studio_id": "Identyfikator studia"
         },
         "data_description": {
-          "studio_uuid": "Znajdziesz go w Fitssey Studio > Twoje studio > UUID.",
-          "api_key": "Utwórz osobny klucz w Fitssey Studio > Integracje > Klucze API."
+          "api_key": "Utwórz osobny klucz w Fitssey Studio > Integracje > Klucze API.",
+          "studio_id": "Wpisz identyfikator studia widoczny w Fitssey Studio, dokładnie w podanej postaci."
         }
       },
       "reauth_confirm": {
@@ -28,9 +28,9 @@
       }
     },
     "error": {
-      "invalid_uuid": "Podaj prawidłowy UUID studia.",
+      "invalid_identifier": "Podaj niepusty identyfikator studia.",
       "invalid_auth": "Fitssey odrzucił klucz API.",
-      "invalid_studio": "Nie znaleziono studia o tym UUID.",
+      "invalid_studio": "Nie znaleziono studia o tym identyfikatorze.",
       "cannot_connect": "Nie udało się odczytać API Fitssey. Spróbuj ponownie później."
     },
     "abort": {
