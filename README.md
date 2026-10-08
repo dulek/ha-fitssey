@@ -6,6 +6,7 @@ A read-only Home Assistant integration that shows Fitssey classes as room calend
 
 - One `calendar` entity for each room returned by Fitssey, even when the room has no upcoming classes.
 - Individual class events with the class name, room, start and end time. Cancelled classes are omitted.
+- Each event description contains JSON counts such as `{"booked_spots": 17, "total_capacity": 22}`. Missing counts are `null`; `booked_spots` is a booking count, not a live occupancy measurement.
 - A five-minute poll of the next two weeks for calendar state and automation triggers. Calendar views outside that window are fetched on demand and cached briefly.
 - Support for multiple studios, newly created rooms, and API-key rotation through Home Assistant.
 
@@ -23,7 +24,7 @@ The repository is prepared for HACS; it cannot be installed through HACS until i
 
 ## Automations
 
-Each room is a standard Home Assistant calendar. You can use a calendar start trigger with a negative offset to prepare a room before class. For rules involving several adjacent classes, cancellation checks, or a dashboard-adjustable lead time, use `calendar.get_events` in an automation and evaluate the returned events. Keep all device control and preparation rules in Home Assistant.
+Each room is a standard Home Assistant calendar. In calendar triggers, read the counts with `trigger.calendar_event.description | from_json(default={})`; `calendar.get_events` returns the same description. You can use a calendar start trigger with a negative offset to prepare a room before class. For rules involving several adjacent classes, cancellation checks, or a dashboard-adjustable lead time, use `calendar.get_events` in an automation and evaluate the returned events. Keep all device control and preparation rules in Home Assistant.
 
 Home Assistant checks calendar triggers about every 15 minutes. A class added at very short notice may be missed by a start trigger; consider a periodic reconciliation automation for important equipment. The integration itself refreshes Fitssey every five minutes, subject to the service being available.
 

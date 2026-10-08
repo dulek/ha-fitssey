@@ -1,7 +1,7 @@
 {
   "domain": "fitssey",
   "name": "Fitssey",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "codeowners": ["@dulek"],
   "config_flow": true,
   "documentation": "https://github.com/dulek/ha-fitssey#readme",

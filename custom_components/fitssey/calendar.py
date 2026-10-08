@@ -88,5 +88,6 @@ class FitsseyRoomCalendar(CoordinatorEntity[FitsseyCoordinator], CalendarEntity)
             start=dt_util.as_local(event.starts_at),
             end=dt_util.as_local(event.ends_at),
             location=event.room_name,
+            description=event.capacity_description,
             uid=event.reference_id,
         )

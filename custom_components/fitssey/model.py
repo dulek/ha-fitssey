@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
+import json
 from typing import Any
 from zoneinfo import ZoneInfo
 
@@ -30,6 +31,22 @@ class FitsseyEvent:
     ends_at: datetime
     room_guid: str
     room_name: str
+    booked_spots: int | None = None
+    total_capacity: int | None = None
+
+    @property
+    def capacity_description(self) -> str:
+        """Return machine-readable counts for the calendar event description."""
+        return json.dumps(
+            {"booked_spots": self.booked_spots, "total_capacity": self.total_capacity}
+        )
+
+
+def _nonnegative_count(value: Any) -> int | None:
+    """Keep valid API counts without turning missing data into zero."""
+    if isinstance(value, int) and not isinstance(value, bool) and value >= 0:
+        return value
+    return None
 
 
 def parse_rooms(payload: Any) -> tuple[FitsseyRoom, ...]:
@@ -98,6 +115,8 @@ def parse_schedule(payload: Any, local_timezone: ZoneInfo) -> tuple[FitsseyEvent
                 starts_at=starts_at,
                 ends_at=ends_at,
                 room_guid=room_guid,
+                booked_spots=_nonnegative_count(item.get("bookedSpots")),
+                total_capacity=_nonnegative_count(item.get("totalCapacity")),
                 room_name=(
                     room_name
                     if isinstance(room_name, str) and room_name
