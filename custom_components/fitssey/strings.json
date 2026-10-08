@@ -6,11 +6,11 @@
         "title": "Connect a Fitssey studio",
         "data": {
           "api_key": "API key",
-          "studio_id": "Studio identifier"
+          "studio_id": "Studio UUID"
         },
         "data_description": {
           "api_key": "Create a dedicated key in Fitssey Studio > Integrations > API Keys.",
-          "studio_id": "Enter the studio identifier shown in Fitssey Studio. Use the value exactly as shown."
+          "studio_id": "Find it in Fitssey Studio > Your Studio > UUID. Enter the value exactly as shown."
         }
       },
       "reauth_confirm": {
@@ -28,9 +28,9 @@
       }
     },
     "error": {
-      "invalid_identifier": "Enter a non-empty studio identifier.",
+      "invalid_identifier": "Enter a non-empty studio UUID.",
       "invalid_auth": "Fitssey rejected the API key.",
-      "invalid_studio": "The studio identifier was not found.",
+      "invalid_studio": "No studio was found for this UUID.",
       "cannot_connect": "Could not read the Fitssey API. Try again later."
     },
     "abort": {

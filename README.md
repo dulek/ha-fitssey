@@ -17,7 +17,7 @@ API reference: [Fitssey API v4](https://app.fitssey.com/docs/api).
 
 Once this repository is hosted on GitHub, add it to HACS as a **custom repository** of type **Integration**, download Fitssey, and restart Home Assistant. For a local installation, copy `custom_components/fitssey` into your Home Assistant configuration's `custom_components` directory and restart.
 
-Then go to **Settings → Devices & services → Add integration → Fitssey**. Enter the studio identifier shown in Fitssey Studio and a dedicated API key from **Fitssey Studio → Integrations → API Keys**. The identifier is treated as text and does not need a UUID format. The integration checks both required endpoints before saving the entry. Choose a different key for each Home Assistant installation.
+Then go to **Settings → Devices & services → Add integration → Fitssey**. Enter the studio UUID from **Fitssey Studio → Your Studio → UUID** and a dedicated API key from **Fitssey Studio → Integrations → API Keys**. Enter the UUID exactly as shown; the integration treats it as text. The integration checks both required endpoints before saving the entry. Choose a different key for each Home Assistant installation.
 
 The repository is prepared for HACS; it cannot be installed through HACS until it is pushed to a GitHub repository. The documentation and issue-tracker links in `manifest.json` target the intended `dulek/ha-fitssey` repository and should be updated if published elsewhere.
 
