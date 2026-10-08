@@ -1,0 +1,42 @@
+{
+  "title": "Fitssey",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Połącz studio Fitssey",
+        "data": {
+          "studio_uuid": "UUID studia",
+          "api_key": "Klucz API"
+        },
+        "data_description": {
+          "studio_uuid": "Znajdziesz go w Fitssey Studio > Twoje studio > UUID.",
+          "api_key": "Utwórz osobny klucz w Fitssey Studio > Integracje > Klucze API."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Połącz ponownie Fitssey",
+        "description": "Podaj nowy klucz API dla tego studia.",
+        "data": {
+          "api_key": "Nowy klucz API"
+        }
+      },
+      "reconfigure": {
+        "title": "Zmień klucz API Fitssey",
+        "data": {
+          "api_key": "Nowy klucz API"
+        }
+      }
+    },
+    "error": {
+      "invalid_uuid": "Podaj prawidłowy UUID studia.",
+      "invalid_auth": "Fitssey odrzucił klucz API.",
+      "invalid_studio": "Nie znaleziono studia o tym UUID.",
+      "cannot_connect": "Nie udało się odczytać API Fitssey. Spróbuj ponownie później."
+    },
+    "abort": {
+      "already_configured": "To studio Fitssey jest już skonfigurowane.",
+      "reauth_successful": "Klucz API został zaktualizowany.",
+      "reconfigure_successful": "Klucz API został zaktualizowany."
+    }
+  }
+}

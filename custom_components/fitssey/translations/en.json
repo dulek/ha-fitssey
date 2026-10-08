@@ -1,0 +1,42 @@
+{
+  "title": "Fitssey",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect a Fitssey studio",
+        "data": {
+          "studio_uuid": "Studio UUID",
+          "api_key": "API key"
+        },
+        "data_description": {
+          "studio_uuid": "Find this in Fitssey Studio > Your Studio > UUID.",
+          "api_key": "Create a dedicated key in Fitssey Studio > Integrations > API Keys."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconnect Fitssey",
+        "description": "Enter a new API key for this studio.",
+        "data": {
+          "api_key": "New API key"
+        }
+      },
+      "reconfigure": {
+        "title": "Change Fitssey API key",
+        "data": {
+          "api_key": "New API key"
+        }
+      }
+    },
+    "error": {
+      "invalid_uuid": "Enter a valid studio UUID.",
+      "invalid_auth": "Fitssey rejected the API key.",
+      "invalid_studio": "The studio UUID was not found.",
+      "cannot_connect": "Could not read the Fitssey API. Try again later."
+    },
+    "abort": {
+      "already_configured": "This Fitssey studio is already configured.",
+      "reauth_successful": "The API key was updated.",
+      "reconfigure_successful": "The API key was updated."
+    }
+  }
+}

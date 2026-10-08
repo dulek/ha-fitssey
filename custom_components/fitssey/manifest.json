@@ -1,0 +1,12 @@
+{
+  "domain": "fitssey",
+  "name": "Fitssey",
+  "version": "0.1.0",
+  "codeowners": ["@dulek"],
+  "config_flow": true,
+  "documentation": "https://github.com/dulek/ha-fitssey#readme",
+  "issue_tracker": "https://github.com/dulek/ha-fitssey/issues",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "requirements": []
+}
